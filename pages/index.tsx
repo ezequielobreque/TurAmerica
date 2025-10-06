@@ -27,18 +27,18 @@ const Home: NextPage<HomeProps> = ({ hero, about, team, destinations, partners }
       subheadline={hero.subheadline}
       ctaText={hero.ctaText}
     />
+    <DestinationsCarousel destinations={destinations} />
     <AboutSection about={about} />
     <TeamSection team={team} />
-    <DestinationsCarousel destinations={destinations} />
     <Footer partners={partners} />
   </Layout>
 );
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const hero: HeroContent = {
-    headline: 'Descubre el mundo con itinerarios responsables y memorables',
+    headline: 'Itinerarios responsables para viajes memorables',
     subheadline:
-      'Paquetes artesanales que conectan a viajeros con comunidades anfitrionas y experiencias transformadoras en más de 40 países.',
+      'Paquetes artesanales que conectan viajeros y anfitriones locales en más de 40 destinos.',
     ctaText: 'Explorar destinos',
   };
 
@@ -52,6 +52,14 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
       'Alojamientos boutique comprometidos con el entorno',
       'Experiencias inmersivas con impacto positivo en comunidades',
     ],
+    location: {
+      name: 'TurAmerica Travel Lounge',
+      address: 'Av. Santa Fe 2920, Palermo, Buenos Aires, Argentina',
+      mapEmbedUrl:
+        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.9989463751894!2d-58.39522382454521!3d-34.5868255579138!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccaa1fe5773b7%3A0x6274957332b26738!2sAv.%20Santa%20Fe%202920%2C%20C1425BGN%20CABA%2C%20Argentina!5e0!3m2!1ses!2sar!4v1700000000000!5m2!1ses!2sar',
+      googleReviewsUrl:
+        'https://www.google.com/maps/place/Av.+Santa+Fe+2920,+C1425BGN+CABA,+Argentina/@-34.5868256,-58.3977988,17z/data=!4m7!3m6!1s0x95bccaa1fe5773b7:0x6274957332b26738!8m2!3d-34.5868256!4d-58.3952249!9m1!1b1',
+    },
   };
 
   const team: TeamMember[] = [

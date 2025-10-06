@@ -4,10 +4,18 @@ export interface HeroContent {
   ctaText: string;
 }
 
+export interface LocationInfo {
+  name: string;
+  address: string;
+  mapEmbedUrl: string;
+  googleReviewsUrl: string;
+}
+
 export interface AboutContent {
   intro: string;
   philosophy: string;
   highlights: string[];
+  location: LocationInfo;
 }
 
 export interface TeamMember {

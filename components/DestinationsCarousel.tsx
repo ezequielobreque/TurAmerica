@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Keyboard, A11y, Autoplay } from 'swiper/modules';
 import type { Destination } from '../types/content';
 
 interface DestinationsCarouselProps {
@@ -6,93 +7,44 @@ interface DestinationsCarouselProps {
 }
 
 export default function DestinationsCarousel({ destinations }: DestinationsCarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
-
-  const slides = useMemo(() => destinations, [destinations]);
-  const totalSlides = slides.length;
-
-  useEffect(() => {
-    if (isPaused || totalSlides === 0) {
-      return undefined;
-    }
-
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % totalSlides);
-    }, 6000);
-
-    return () => clearInterval(timer);
-  }, [isPaused, totalSlides]);
-
-  const goToSlide = (index: number) => {
-    setCurrentIndex((index + totalSlides) % totalSlides);
-  };
-
   return (
-    <section className="section section--dark" id="destinos">
+    <section className="section" id="destinos">
       <div className="container">
-        <h2 className="section__title section__title--light">Explora nuestros destinos</h2>
-        <p className="section__lead section__lead--light">
+        <h2 className="section__title">Explora nuestros destinos</h2>
+        <p className="section__lead">
           Inspirados en postales icónicas del planeta, cada paquete combina hospedajes boutique,
           experiencias inmersivas y guías locales para crear recuerdos inolvidables.
         </p>
-        <div
-          className="carousel"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          <div className="carousel__viewport">
-            {slides.map((destination, index) => (
-              <article
-                key={destination.name}
-                className={`carousel__slide ${index === currentIndex ? 'is-active' : ''}`}
-                aria-hidden={index !== currentIndex}
-              >
-                <div className="carousel__media">
-                  <img src={destination.image} alt={destination.alt} loading="lazy" />
-                </div>
-                <div className="carousel__caption">
-                  <h3>{destination.name}</h3>
-                  <p>{destination.description}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-          <div className="carousel__controls">
-            <button
-              type="button"
-              className="carousel__control"
-              onClick={() => goToSlide(currentIndex - 1)}
-              aria-label="Ver destino anterior"
-            >
-              ◀
-            </button>
-            <div className="carousel__dots" role="tablist" aria-label="Destinos destacados">
-              {slides.map((destination, index) => (
-                <button
-                  key={destination.name}
-                  type="button"
-                  className={`carousel__dot ${index === currentIndex ? 'is-active' : ''}`}
-                  onClick={() => goToSlide(index)}
-                  aria-label={`Ver ${destination.name}`}
-                  role="tab"
-                  aria-selected={index === currentIndex}
-                >
-                  <span className="sr-only">{destination.name}</span>
-                </button>
-              ))}
-            </div>
-            <button
-              type="button"
-              className="carousel__control"
-              onClick={() => goToSlide(currentIndex + 1)}
-              aria-label="Ver siguiente destino"
-            >
-              ▶
-            </button>
-          </div>
-        </div>
       </div>
+      <Swiper
+        className="destinations-swiper"
+        modules={[Navigation, Keyboard, A11y, Autoplay]}
+        spaceBetween={24}
+        slidesPerView={1}
+        navigation
+        keyboard={{ enabled: true }}
+        autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+        loop={destinations.length > 3}
+        breakpoints={{
+          640: { slidesPerView: 1, spaceBetween: 28 },
+          900: { slidesPerView: 2, spaceBetween: 32 },
+          1200: { slidesPerView: 3, spaceBetween: 36 },
+        }}
+      >
+        {destinations.map((destination) => (
+          <SwiperSlide key={destination.name}>
+            <article
+              className="destination-card"
+              style={{ backgroundImage: `url(${destination.image})` }}
+            >
+              <div className="destination-card__overlay">
+                <h3 className="destination-card__title">{destination.name}</h3>
+                <p className="destination-card__description">{destination.description}</p>
+              </div>
+            </article>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </section>
   );
 }
