@@ -116,8 +116,8 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
       description:
         'Ceremonias del té privadas, templos milenarios y jardines zen en plena floración.',
       image:
-        'https://images.unsplash.com/photo-1504788368824-9f67ea0c77a7?auto=format&fit=crop&w=1200&q=80',
-      alt: 'Templo japonés rodeado de árboles con hojas rojas en otoño',
+        'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=1200&q=80',
+      alt: 'Bosque de bambú de Arashiyama iluminado por la luz natural en Kyoto',
     },
   ];
 
